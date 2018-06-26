@@ -372,6 +372,7 @@ var left = $(".left");
 var right = $(".right");
 var irc = $(".irc");
 var cover = $(".cover");
+var lock = false;
 
 //通过api获取资源，并放进去
 var music = new Audio();
@@ -421,6 +422,7 @@ function fresh(channelId){
   function play(url) {
     music.src = url;
     music.play();
+    lock = false;
   }
 //获取歌词
  function getLrc(lrcUrl) {
@@ -527,6 +529,7 @@ left.on("click",function(){
 
 //ajax
   function get(url, data, callback, dataType) {
+    lock = ture;
     url += '?' + Object.keys(data).map(function(key){
       return key + '=' + data[key];
     }).join('&');
@@ -537,7 +540,10 @@ left.on("click",function(){
       callback(xhr.response);
     };
     xhr.open('GET', url, true);
+    
     xhr.send();
+    lock = false;
+    
   }
 
 //事件监听
@@ -584,7 +590,11 @@ function check(){
       playBtn.removeClass("pause");
       playBtn.addClass("play");
       }else{
-      music.play();
+        if(lock==false){
+          music.play();
+        }
+      
+     
      
      playBtn.removeClass("play");
      playBtn.addClass("pause");
