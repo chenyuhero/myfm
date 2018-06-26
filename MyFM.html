@@ -382,7 +382,7 @@ var channelId="public_tuijian_winter";
 var ircl;
 //载入频道
 $(window).on("load", function(){
-    get('//api.jirengu.com/fm/getChannels.php', {}, function(ret){
+    get('https://api.jirengu.com/fm/getChannels.php', {}, function(ret){
       list = ret.channels;
       renderCate(list);
       fresh(channelId);
